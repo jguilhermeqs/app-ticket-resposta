@@ -1,4 +1,4 @@
-import streamlit as st
+   import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 
@@ -20,7 +20,7 @@ if arquivo:
     # Selecionar parâmetros
     col1, col2 = st.columns(2)
     executante = col1.selectbox("Executante", sorted(df["Executante"].dropna().unique()))
-    loja = col2.selectbox("Loja", sorted(df["Loja"].dropna().unique()))
+    loja = col2.selectbox("Empresa", sorted(df["Empresa"].dropna().unique()))
     gerente = st.selectbox("Gerente", sorted(df["Gerente"].dropna().unique()))
     dias_analise = st.slider("Quantos dias para analisar?", 1, 30, 7)
 
@@ -32,14 +32,14 @@ if arquivo:
     def avaliar_ticket(row, data_alvo):
         if row["Executante"] != executante:
             return ""
-        if pd.to_datetime(row["Data"]).date() != data_alvo:
+        if pd.to_datetime(row["Data da Última Execução"]).date() != data_alvo:
             return ""
-        if row["Loja"] != loja or row["Gerente"] != gerente:
+        if row["Empresa"] != loja or row["Gerente"] != gerente:
             return ""
         if row["Responsável"] == executante:
-            if row["Status"] == "Respondidos":
+            if row["Preenchido?"] == "Respondidos":
                 return "✅"
-            elif row["Status"] == "Não respondido":
+            elif row["Preenchido?"] == "Não respondido":
                 return "❌"
         return ""
 
