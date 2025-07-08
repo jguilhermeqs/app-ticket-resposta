@@ -16,6 +16,8 @@ arquivo = st.file_uploader("Envie a planilha de tickets (.xlsx)", type="xlsx")
 
 if arquivo:
     df = pd.read_excel(arquivo)
+    df.columns = df.columns.str.strip()  # remove espaços extras dos nomes
+
 
     # Selecionar parâmetros
     col1, col2 = st.columns(2)
